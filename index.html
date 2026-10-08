@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASM Glossary Pronunciation & Syllable Flashcards</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    /* 3D Card Flip styles */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    
+    .transform-style-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Pulsing mic animation */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 0.4; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .speaking-pulse {
+      animation: pulse-ring 1.2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased">
+
+  <!-- Top Header Navigation -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg text-slate-900 leading-tight">Vocabulary Pronunciation</h1>
+          <p class="text-xs text-slate-500 hidden sm:block">Syllables & Stress Mastery Guide</p>
+        </div>
+      </div>
+
+      <!-- Mode Switch Tabs -->
+      <nav class="flex bg-slate-100 p-1 rounded-xl border border-slate-200">
+        <button id="tab-flashcards" onclick="switchTab('flashcards')" class="px-4 py-1.5 text-sm font-semibold rounded-lg transition-all duration-200 text-brand-700 bg-white shadow-sm flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+          </svg>
+          Flashcards
+        </button>
+        <button id="tab-list" onclick="switchTab('list')" class="px-4 py-1.5 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+          </svg>
+          Word List
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+    <!-- Pronunciation & Syllable Rules Accordion / Guide -->
+    <section class="mb-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+      <div class="flex items-center justify-between cursor-pointer" onclick="toggleGuide()">
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-blue-600 text-white rounded-lg shadow">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-bold text-slate-900 text-sm sm:text-base">Syllables & Stress Breakdown Rules</h2>
+            <p class="text-xs text-slate-600">Quick guide on how to pronounce broken down words</p>
+          </div>
+        </div>
+        <button id="guide-toggle-icon" class="text-slate-500 hover:text-slate-800 transition-transform duration-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div id="guide-content" class="mt-4 pt-4 border-t border-blue-200/60 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm text-slate-700 hidden">
+        <div class="bg-white/80 p-3 rounded-xl border border-blue-100">
+          <span class="font-bold text-brand-700 block mb-1">1. Syllable Separation ( · )</span>
+          Dots indicate where the word naturally breaks down into sound units. Each syllable contains a vowel sound.
+        </div>
+        <div class="bg-white/80 p-3 rounded-xl border border-blue-100">
+          <span class="font-bold text-brand-700 block mb-1">2. Capitalized Stress (CAPS)</span>
+          Capitalized syllables (e.g. <span class="font-bold text-indigo-700 bg-indigo-50 px-1 rounded">ac-COM-mo-date</span>) receive the primary stress, spoken louder and clearer.
+        </div>
+        <div class="bg-white/80 p-3 rounded-xl border border-blue-100">
+          <span class="font-bold text-brand-700 block mb-1">3. Word Families</span>
+          Note how stress shifts when derivative forms are created (e.g. <span class="font-semibold">PROD-uct</span> vs <span class="font-semibold">pro-DUC-tion</span>).
+        </div>
+      </div>
+    </section>
+
+    <!-- MODE 1: FLASHCARD REVISION VIEW -->
+    <section id="view-flashcards" class="space-y-6">
+      
+      <!-- Top Flashcard Controls Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-start">
+          <span id="card-counter" class="text-sm font-bold text-slate-700 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
+            Card 1 of 45
+          </span>
+          <button onclick="shuffleCards()" class="px-3 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition border border-slate-200 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+            Shuffle Deck
+          </button>
+        </div>
+
+        <!-- Filter Options -->
+        <div class="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-end">
+          <label class="text-xs font-medium text-slate-500">Filter:</label>
+          <select id="card-filter" onchange="filterFlashcards(this.value)" class="text-xs font-semibold bg-slate-50 border border-slate-200 text-slate-700 py-1.5 px-3 rounded-lg outline-none focus:border-brand-500">
+            <option value="all">All Words (45)</option>
+            <option value="learning">Needs Practice</option>
+            <option value="mastered">Mastered</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Flashcard Interactive Area -->
+      <div class="flex flex-col items-center justify-center py-4">
+        
+        <!-- 3D Card Container -->
+        <div id="flashcard-box" onclick="flipCard()" class="w-full max-w-lg h-80 sm:h-96 perspective-1000 cursor-pointer group">
+          <div id="flashcard-inner" class="relative w-full h-full transform-style-3d shadow-xl rounded-3xl border border-slate-200 bg-white transition-transform duration-500">
+            
+            <!-- FRONT OF CARD -->
+            <div class="absolute inset-0 w-full h-full backface-hidden rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center bg-gradient-to-b from-white via-slate-50 to-blue-50/30 border-2 border-slate-100">
+              <div class="w-full flex justify-between items-center">
+                <span id="front-mastered-badge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-400">Not Mastered</span>
+                <span class="text-xs text-slate-400 font-medium">Click card to reveal breakdown</span>
+              </div>
+
+              <!-- Main Front Word -->
+              <div class="text-center my-auto space-y-4">
+                <h3 id="front-word" class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+                  accommodate
+                </h3>
+                
+                <!-- Audio Play Button Front -->
+                <button onclick="event.stopPropagation(); speakCurrentWord();" class="inline-flex items-center gap-2 px-4 py-2 bg-brand-600 hover:bg-brand-700 active:scale-95 text-white rounded-full text-sm font-semibold shadow-md transition-all">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                  </svg>
+                  Listen
+                </button>
+              </div>
+
+              <div class="text-slate-400 text-xs flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Flip for syllables & family
+              </div>
+            </div>
+
+            <!-- BACK OF CARD -->
+            <div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center bg-slate-900 text-white border-2 border-slate-800">
+              <div class="w-full flex justify-between items-center">
+                <span class="text-xs text-indigo-400 font-bold uppercase tracking-wider">Pronunciation Guide</span>
+                <button onclick="event.stopPropagation(); speakCurrentWord();" class="p-2 bg-slate-800 hover:bg-slate-700 text-indigo-400 rounded-full transition">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Syllables and Stress Content -->
+              <div class="text-center my-auto space-y-3 w-full">
+                <div>
+                  <div class="text-xs text-slate-400 uppercase font-semibold mb-1">Syllables</div>
+                  <div id="back-syllables" class="text-2xl sm:text-3xl font-bold tracking-wide text-indigo-300">
+                    ac·com·mo·date
+                  </div>
+                </div>
+
+                <div>
+                  <div class="text-xs text-slate-400 uppercase font-semibold mb-1">Stressed Pronunciation</div>
+                  <div id="back-stress" class="text-xl sm:text-2xl font-extrabold text-amber-400 font-mono tracking-wider">
+                    ac-COM-mo-date
+                  </div>
+                </div>
+
+                <!-- Word Family Box if present -->
+                <div id="back-family-container" class="mt-3 pt-3 border-t border-slate-800 w-full hidden">
+                  <div class="text-xs text-slate-400 font-semibold uppercase mb-1">Word Family</div>
+                  <div id="back-family-list" class="flex flex-wrap justify-center gap-2">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-slate-400 text-xs">
+                Click anywhere to flip back
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Flashcard Navigation Controls Below Card -->
+        <div class="flex items-center justify-between w-full max-w-lg mt-6 gap-3">
+          <button onclick="prevCard()" class="flex-1 py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold rounded-2xl shadow-sm transition active:scale-95 flex items-center justify-center gap-2 text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Previous
+          </button>
+
+          <button id="mastery-toggle-btn" onclick="toggleMastery()" class="px-4 py-3 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200 text-slate-700 font-semibold rounded-2xl transition active:scale-95 flex items-center justify-center gap-1.5 text-xs sm:text-sm">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span id="mastery-btn-text">Mark Mastered</span>
+          </button>
+
+          <button onclick="nextCard()" class="flex-1 py-3 px-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-sm transition active:scale-95 flex items-center justify-center gap-2 text-sm">
+            Next
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MODE 2: WORD LIST GRID VIEW -->
+    <section id="view-list" class="space-y-6 hidden">
+      
+      <!-- Search and Filter Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="relative w-full sm:w-96">
+          <input type="text" id="search-input" oninput="handleSearch(this.value)" placeholder="Search vocabulary or syllables..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:border-brand-500 transition">
+          <svg class="w-5 h-5 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+
+        <div id="list-count" class="text-xs font-bold text-slate-500">
+          Showing 45 Words
+        </div>
+      </div>
+
+      <!-- Words Grid Container -->
+      <div id="words-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Dynamically Populated by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4">
+      <p class="font-medium text-slate-600">ASM Vocabulary & Pronunciation Companion</p>
+      <p class="mt-1">Built with Web Speech Synthesis API for standard English clear pronunciation.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Complete Vocabulary Dataset without parts of speech
+    const vocabData = [
+      {
+        word: "accommodate",
+        syllables: "ac·com·mo·date",
+        stress: "ac-COM-mo-date",
+      },
+      {
+        word: "attract",
+        syllables: "at·tract",
+        stress: "at-TRACT",
+        family: [
+          { word: "attractive", syllables: "at·trac·tive", stress: "at-TRAC-tive" }
+        ]
+      },
+      {
+        word: "arrange",
+        syllables: "ar·range",
+        stress: "ar-RANGE"
+      },
+      {
+        word: "boost",
+        syllables: "boost",
+        stress: "BOOST"
+      },
+      {
+        word: "budget",
+        syllables: "bud·get",
+        stress: "BUD-get"
+      },
+      {
+        word: "common",
+        syllables: "com·mon",
+        stress: "COM-mon"
+      },
+      {
+        word: "competition",
+        syllables: "com·pe·ti·tion",
+        stress: "com-pe-TI-tion"
+      },
+      {
+        word: "concert",
+        syllables: "con·cert",
+        stress: "CON-cert"
+      },
+      {
+        word: "convenient",
+        syllables: "con·ve·nient",
+        stress: "con-VE-nient",
+        family: [
+          { word: "convenience", syllables: "con·ve·nience", stress: "con-VE-nience" }
+        ]
+      },
+      {
+        word: "cost",
+        syllables: "cost",
+        stress: "COST",
+        family: [
+          { word: "costly", syllables: "cost·ly", stress: "COST-ly" }
+        ]
+      },
+      {
+        word: "coupon",
+        syllables: "cou·pon",
+        stress: "COU-pon"
+      },
+      {
+        word: "create",
+        syllables: "cre·ate",
+        stress: "cre-ATE"
+      },
+      {
+        word: "customer",
+        syllables: "cus·tom·er",
+        stress: "CUS-tom-er"
+      },
+      {
+        word: "demonstration",
+        syllables: "dem·on·stra·tion",
+        stress: "dem-on-STRA-tion"
+      },
+      {
+        word: "difficult",
+        syllables: "dif·fi·cult",
+        stress: "DIF-fi-cult"
+      },
+      {
+        word: "direct",
+        syllables: "di·rect",
+        stress: "di-RECT",
+        family: [
+          { word: "directly", syllables: "di·rect·ly", stress: "di-RECT-ly" }
+        ]
+      },
+      {
+        word: "discount",
+        syllables: "dis·count",
+        stress: "DIS-count"
+      },
+      {
+        word: "easy",
+        syllables: "ea·sy",
+        stress: "EA-sy",
+        family: [
+          { word: "easily", syllables: "ea·si·ly", stress: "EA-si-ly" }
+        ]
+      },
+      {
+        word: "effect",
+        syllables: "ef·fect",
+        stress: "ef-FECT",
+        family: [
+          { word: "effective", syllables: "ef·fec·tive", stress: "ef-FEC-tive" }
+        ]
+      },
+      {
+        word: "efficient",
+        syllables: "ef·fi·cient",
+        stress: "ef-FI-cient"
+      },
+      {
+        word: "enough",
+        syllables: "e·nough",
+        stress: "e-NOUGH"
+      },
+      {
+        word: "event",
+        syllables: "e·vent",
+        stress: "e-VENT"
+      },
+      {
+        word: "expensive",
+        syllables: "ex·pen·sive",
+        stress: "ex-PEN-sive"
+      },
+      {
+        word: "experience",
+        syllables: "ex·pe·ri·ence",
+        stress: "ex-PE-ri-ence"
+      },
+      {
+        word: "fantastic",
+        syllables: "fan·tas·tic",
+        stress: "fan-TAS-tic"
+      },
+      {
+        word: "function",
+        syllables: "func·tion",
+        stress: "FUNC-tion",
+        family: [
+          { word: "functional", syllables: "func·tion·al", stress: "FUNC-tion-al" }
+        ]
+      },
+      {
+        word: "image",
+        syllables: "im·age",
+        stress: "IM-age"
+      },
+      {
+        word: "insufficient",
+        syllables: "in·suf·fi·cient",
+        stress: "in-suf-FI-cient"
+      },
+      {
+        word: "launch",
+        syllables: "launch",
+        stress: "LAUNCH"
+      },
+      {
+        word: "manage",
+        syllables: "man·age",
+        stress: "MAN-age"
+      },
+      {
+        word: "organise",
+        syllables: "or·gan·ise",
+        stress: "OR-gan-ise"
+      },
+      {
+        word: "potential",
+        syllables: "po·ten·tial",
+        stress: "po-TEN-tial"
+      },
+      {
+        word: "popular",
+        syllables: "pop·u·lar",
+        stress: "POP-u-lar"
+      },
+      {
+        word: "practical",
+        syllables: "prac·ti·cal",
+        stress: "PRAC-ti-cal"
+      },
+      {
+        word: "preference",
+        syllables: "pref·er·ence",
+        stress: "PREF-er-ence"
+      },
+      {
+        word: "prepare",
+        syllables: "pre·pare",
+        stress: "pre-PARE",
+        family: [
+          { word: "preparation", syllables: "prep·a·ra·tion", stress: "prep-a-RA-tion" }
+        ]
+      },
+      {
+        word: "product",
+        syllables: "prod·uct",
+        stress: "PROD-uct",
+        family: [
+          { word: "production", syllables: "pro·duc·tion", stress: "pro-DUC-tion" }
+        ]
+      },
+      {
+        word: "promote",
+        syllables: "pro·mote",
+        stress: "pro-MOTE",
+        family: [
+          { word: "promotion", syllables: "pro·mo·tion", stress: "pro-MO-tion" },
+          { word: "promotional", syllables: "pro·mo·tion·al", stress: "pro-MO-tion-al" }
+        ]
+      },
+      {
+        word: "reach",
+        syllables: "reach",
+        stress: "REACH"
+      },
+      {
+        word: "special",
+        syllables: "spe·cial",
+        stress: "SPE-cial"
+      },
+      {
+        word: "spokesperson",
+        syllables: "spokes·per·son",
+        stress: "SPOKES-per-son"
+      },
+      {
+        word: "suggested",
+        syllables: "sug·gest·ed",
+        stress: "sug-JES-ted"
+      },
+      {
+        word: "suitable",
+        syllables: "suit·able",
+        stress: "SUIT-a-ble"
+      },
+      {
+        word: "trial",
+        syllables: "tri·al",
+        stress: "TRI-al"
+      },
+      {
+        word: "voucher",
+        syllables: "vouch·er",
+        stress: "VOUCH-er"
+      }
+    ];
+
+    // State Variables
+    let currentDeck = [...vocabData];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let activeTab = 'flashcards';
+    let masteredSet = new Set();
+
+    // Speech Synthesis
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) {
+        alert("Audio speech synthesis is not supported on this browser.");
+        return;
+      }
+      window.speechSynthesis.cancel(); // Stop any active speech
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.85; // Clear speed for learning
+      utterance.pitch = 1.0;
+      
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speakCurrentWord() {
+      if (currentDeck.length === 0) return;
+      speakText(currentDeck[currentIndex].word);
+    }
+
+    // Card Navigation Functions
+    function flipCard() {
+      const inner = document.getElementById('flashcard-inner');
+      isFlipped = !isFlipped;
+      if (isFlipped) {
+        inner.classList.add('rotate-y-180');
+      } else {
+        inner.classList.remove('rotate-y-180');
+      }
+    }
+
+    function resetFlip() {
+      isFlipped = false;
+      document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+    }
+
+    function updateCardUI() {
+      if (currentDeck.length === 0) {
+        document.getElementById('front-word').innerText = "No Words";
+        document.getElementById('back-syllables').innerText = "-";
+        document.getElementById('back-stress').innerText = "-";
+        document.getElementById('card-counter').innerText = "0 of 0";
+        return;
+      }
+
+      const item = currentDeck[currentIndex];
+      const isMastered = masteredSet.has(item.word);
+
+      // Front UI
+      document.getElementById('front-word').innerText = item.word;
+      const frontBadge = document.getElementById('front-mastered-badge');
+      if (isMastered) {
+        frontBadge.innerText = "Mastered";
+        frontBadge.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700";
+      } else {
+        frontBadge.innerText = "Needs Practice";
+        frontBadge.className = "text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-500";
+      }
+
+      // Back UI
+      document.getElementById('back-syllables').innerText = item.syllables;
+      document.getElementById('back-stress').innerText = item.stress;
+
+      // Word Family
+      const familyContainer = document.getElementById('back-family-container');
+      const familyList = document.getElementById('back-family-list');
+      
+      if (item.family && item.family.length > 0) {
+        familyContainer.classList.remove('hidden');
+        familyList.innerHTML = item.family.map(f => `
+          <button onclick="event.stopPropagation(); speakText('${f.word}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 text-left transition flex items-center gap-2 group">
+            <div>
+              <span class="text-sm font-bold text-white group-hover:text-indigo-300 transition">${f.word}</span>
+              <span class="text-xs text-slate-400 block">${f.syllables} · <span class="text-amber-300 font-mono">${f.stress}</span></span>
+            </div>
+            <svg class="w-4 h-4 text-indigo-400 opacity-80 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+            </svg>
+          </button>
+        `).join('');
+      } else {
+        familyContainer.classList.add('hidden');
+        familyList.innerHTML = '';
+      }
+
+      // Counter
+      document.getElementById('card-counter').innerText = `Card ${currentIndex + 1} of ${currentDeck.length}`;
+
+      // Mastery Button Text
+      const masteryBtnText = document.getElementById('mastery-btn-text');
+      const masteryBtn = document.getElementById('mastery-toggle-btn');
+      if (isMastered) {
+        masteryBtnText.innerText = "Mastered";
+        masteryBtn.className = "px-4 py-3 bg-emerald-100 text-emerald-800 font-bold rounded-2xl transition border border-emerald-300 flex items-center justify-center gap-1.5 text-xs sm:text-sm";
+      } else {
+        masteryBtnText.innerText = "Mark Mastered";
+        masteryBtn.className = "px-4 py-3 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 border border-slate-200 text-slate-700 font-semibold rounded-2xl transition active:scale-95 flex items-center justify-center gap-1.5 text-xs sm:text-sm";
+      }
+    }
+
+    function prevCard() {
+      if (currentDeck.length === 0) return;
+      resetFlip();
+      setTimeout(() => {
+        currentIndex = (currentIndex - 1 + currentDeck.length) % currentDeck.length;
+        updateCardUI();
+      }, 150);
+    }
+
+    function nextCard() {
+      if (currentDeck.length === 0) return;
+      resetFlip();
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % currentDeck.length;
+        updateCardUI();
+      }, 150);
+    }
+
+    function toggleMastery() {
+      if (currentDeck.length === 0) return;
+      const currentWord = currentDeck[currentIndex].word;
+      if (masteredSet.has(currentWord)) {
+        masteredSet.delete(currentWord);
+      } else {
+        masteredSet.add(currentWord);
+      }
+      updateCardUI();
+      renderWordList(document.getElementById('search-input')?.value || '');
+    }
+
+    function shuffleCards() {
+      resetFlip();
+      setTimeout(() => {
+        for (let i = currentDeck.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [currentDeck[i], currentDeck[j]] = [currentDeck[j], currentDeck[i]];
+        }
+        currentIndex = 0;
+        updateCardUI();
+      }, 150);
+    }
+
+    function filterFlashcards(filterValue) {
+      resetFlip();
+      setTimeout(() => {
+        if (filterValue === 'mastered') {
+          currentDeck = vocabData.filter(item => masteredSet.has(item.word));
+        } else if (filterValue === 'learning') {
+          currentDeck = vocabData.filter(item => !masteredSet.has(item.word));
+        } else {
+          currentDeck = [...vocabData];
+        }
+        currentIndex = 0;
+        updateCardUI();
+      }, 150);
+    }
+
+    // List Mode Functionality
+    function renderWordList(query = '') {
+      const grid = document.getElementById('words-grid');
+      const cleanQuery = query.toLowerCase().trim();
+
+      const filtered = vocabData.filter(item => {
+        const matchesWord = item.word.toLowerCase().includes(cleanQuery);
+        const matchesSyllable = item.syllables.toLowerCase().includes(cleanQuery);
+        const matchesFamily = item.family && item.family.some(f => f.word.toLowerCase().includes(cleanQuery));
+        return matchesWord || matchesSyllable || matchesFamily;
+      });
+
+      document.getElementById('list-count').innerText = `Showing ${filtered.length} Words`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full text-center py-12 bg-white rounded-2xl border border-slate-200 text-slate-500">
+            <svg class="w-12 h-12 mx-auto text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <p class="font-semibold">No vocabulary words found</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const isMastered = masteredSet.has(item.word);
+        
+        let familyHTML = '';
+        if (item.family && item.family.length > 0) {
+          familyHTML = `
+            <div class="mt-3 pt-3 border-t border-slate-100">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1.5">Word Family</span>
+              <div class="space-y-1.5">
+                ${item.family.map(f => `
+                  <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-100 hover:bg-slate-100/80 transition">
+                    <div>
+                      <span class="font-semibold text-xs text-slate-800">${f.word}</span>
+                      <span class="text-[11px] text-slate-500 block">${f.syllables} · <span class="font-mono text-brand-600">${f.stress}</span></span>
+                    </div>
+                    <button onclick="speakText('${f.word}')" class="p-1.5 text-brand-600 hover:bg-white rounded-lg transition shadow-xs" title="Listen">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h4 class="font-extrabold text-slate-900 text-xl tracking-tight">${item.word}</h4>
+                  <div class="text-xs text-slate-500 mt-0.5">
+                    ${item.syllables}
+                  </div>
+                </div>
+                <button onclick="speakText('${item.word}')" class="p-2 bg-brand-50 hover:bg-brand-100 text-brand-600 rounded-xl transition flex-shrink-0" title="Listen Pronunciation">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
+                  </svg>
+                </button>
+              </div>
+
+              <div class="mt-3">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Stressed Syllable</span>
+                <span class="font-mono text-sm font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 inline-block mt-0.5">
+                  ${item.stress}
+                </span>
+              </div>
+
+              ${familyHTML}
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+              <span class="text-slate-400">Status</span>
+              <button onclick="toggleMasteryWord('${item.word}')" class="font-bold px-2.5 py-1 rounded-full transition ${isMastered ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                ${isMastered ? '✓ Mastered' : 'Mark Mastered'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleMasteryWord(word) {
+      if (masteredSet.has(word)) {
+        masteredSet.delete(word);
+      } else {
+        masteredSet.add(word);
+      }
+      renderWordList(document.getElementById('search-input')?.value || '');
+      updateCardUI();
+    }
+
+    function handleSearch(val) {
+      renderWordList(val);
+    }
+
+    // Tab switching
+    function switchTab(tab) {
+      activeTab = tab;
+      const btnFlash = document.getElementById('tab-flashcards');
+      const btnList = document.getElementById('tab-list');
+      const viewFlash = document.getElementById('view-flashcards');
+      const viewList = document.getElementById('view-list');
+
+      if (tab === 'flashcards') {
+        btnFlash.className = "px-4 py-1.5 text-sm font-semibold rounded-lg transition-all duration-200 text-brand-700 bg-white shadow-sm flex items-center gap-2";
+        btnList.className = "px-4 py-1.5 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2";
+        viewFlash.classList.remove('hidden');
+        viewList.classList.add('hidden');
+      } else {
+        btnList.className = "px-4 py-1.5 text-sm font-semibold rounded-lg transition-all duration-200 text-brand-700 bg-white shadow-sm flex items-center gap-2";
+        btnFlash.className = "px-4 py-1.5 text-sm font-semibold rounded-lg transition-all duration-200 text-slate-600 hover:text-slate-900 flex items-center gap-2";
+        viewList.classList.remove('hidden');
+        viewFlash.classList.add('hidden');
+        renderWordList();
+      }
+    }
+
+    // Toggle guide box
+    function toggleGuide() {
+      const content = document.getElementById('guide-content');
+      const icon = document.getElementById('guide-toggle-icon');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    // Keyboard navigation support for flashcards
+    document.addEventListener('keydown', (e) => {
+      if (activeTab !== 'flashcards') return;
+      if (e.key === 'ArrowLeft') {
+        prevCard();
+      } else if (e.key === 'ArrowRight') {
+        nextCard();
+      } else if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        flipCard();
+      } else if (e.key === 'Enter') {
+        speakCurrentWord();
+      }
+    });
+
+    // Initialize Page
+    window.onload = function() {
+      updateCardUI();
+      renderWordList();
+    };
+  </script>
+</body>
+</html>
